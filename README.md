@@ -3,7 +3,7 @@
     <a href="https://addons.mozilla.org/en-US/firefox/addon/did-you-mean-for-github/">
         <img src="icons/firefox.png" alt="Availible on Firefox Add-Ons" width="150">
     </a>
-    <a href="https://chrome.google.com/webstore/detail/did-you-mean-for-github/...">
+    <a href="https://chrome.google.com/webstore/detail/nidbchddekgieemiojljclnnpaejknce">
         <img src="icons/chrome.png" alt="Availible on chrome web store" width="150">
     </a>
 </p>
@@ -18,7 +18,7 @@ Demo:
 When trying to access "https://github.com/facebook/reakt", GitHub gives a 404 error. You probably meant to go to "https://github.com/facebook/react" so this extension suggests you the correct repository.
 
 ## Installation
-"Pin for GitHub" is availible through the [Firefox Add-On Platform](https://addons.mozilla.org/en-US/firefox/addon/did-you-mean-for-github/) and [chrome web store](https://chrome.google.com/webstore/detail/did-you-mean-for-github/...).
+"Pin for GitHub" is availible through the [Firefox Add-On Platform](https://addons.mozilla.org/en-US/firefox/addon/did-you-mean-for-github/) and [chrome web store](https://chrome.google.com/webstore/detail/nidbchddekgieemiojljclnnpaejknce).
 You can also install this extension by downloading the source from GitHub and loading the unpacked extension through "about:debugging" as a "Temporary Add-On".
 
 ## How it works
