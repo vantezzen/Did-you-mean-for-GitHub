@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>"Did you mean...?" for GitHub</title>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="tailwind.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container text-center text-white">
+    <div class="text-center w-screen mt-16 text-light leading-normal px-4">
+      <div class="text-3xl mb-3">GitHub access token</div>
+      <p>You can optionally add a GitHub API access token to this extension.</p>
+      <p>By providing a token, this extension will use the GitHub GraphQL API to check if the suggested repositories actually exist.</p>
+      <p>If you do not supply a token, this extension will still work, but it will suggest repositories that don't exist.</p>
+      <p>Please create a new access token <a class="text-white" href="https://github.com/settings/tokens/new?description=%22Did%20you%20mean...%3F%22%20for%20GitHub" target="_blank" rel="noopener">by clicking here</a>. You don't need to give the token any scopes.</p>
+      <p>Your access token will only be saved in your browser.</p>
+
+      <div class="mt-12">
+        <div class="text-green-light hidden" id="success">Saved!</div>
+        <label for="token">GitHub Access Token</label><br />
+        <input type="text" class="w-full md:w-1/2 lg:w-1/3 p-3" placeholder="71hahsdjc8d6ddccbc99eb7agsdbh4d481b79d028" id="token">
+      </div>
+      <button id="save" class="bg-indigo-light hover:bg-indigo text-white font-bold w-full md:w-1/2 lg:w-1/3 py-2 px-4 mt-5 rounded">Save</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
