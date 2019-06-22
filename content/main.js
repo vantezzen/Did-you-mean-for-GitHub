@@ -74,25 +74,29 @@
                           </span>
                         </a>
                       </div>
-                      ${repo.details && `
-                        <p class="pinned-item-desc text-gray text-small d-block mt-2 mb-3">
-                          ${repo.details.description}
-                        </p>
+                      ${repo.details ? `
+                        ${repo.details.description ? `
+                          <p class="pinned-item-desc text-gray text-small d-block mt-2 mb-3">
+                            ${repo.details.description}
+                          </p>
+                        ` : ''}
+                        
                         <p class="mb-0 f6 text-gray">
-                          ${repo.details.language && `
+                          ${repo.details.language ? `
                             <span class="d-inline-block mr-3">
                               <span class="repo-language-color" style="background-color: ${repo.details.language.color}"></span>
                               <span itemprop="programmingLanguage">${repo.details.language.name}</span>
                             </span>
-                          `}
+                          ` : ''}
                             
-
+                          ${repo.details.stars ? `
                             <a href="/${repo.name}/stargazers" class="pinned-item-meta muted-link ">
                               <svg aria-label="stars" class="octicon octicon-star" viewBox="0 0 14 16" version="1.1" width="14" height="16" role="img"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"></path></svg>
                               ${repo.details.stars > 999 ? Math.round(repo.details.stars / 1000) + 'k' : repo.details.stars}
                             </a>
+                          ` : ''}
                         </p>
-                      `}
+                      ` : ''}
                     </div>
                 </li>`;
               }
