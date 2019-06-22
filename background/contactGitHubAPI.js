@@ -47,14 +47,11 @@ const applyGitHubResults = (result, repos) => {
     const index = translation.indexOf(position);
 
     if (result[position].repositoryCount > 0) {
-      console.log(result[position]);
       filtered.push({
         ...repos[index],
-        details: {
-          stars: result[position].edges[0].node.stargazers.totalCount,
-          description: result[position].edges[0].node.description,
-          language: result[position].edges[0].node.primaryLanguage
-        }
+        stars: result[position].edges[0].node.stargazers.totalCount,
+        description: result[position].edges[0].node.description,
+        language: result[position].edges[0].node.primaryLanguage
       });
     }
   }
