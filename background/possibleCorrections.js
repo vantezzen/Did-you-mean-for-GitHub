@@ -67,6 +67,25 @@ const buildCase = (arr, stringCase) => {
   }
 }
 
+// Create all possible permutations of an array
+const permutate = (array) => {
+  function p(array, temp) {
+      var i, x;
+      if (!array.length) {
+          result.push(temp);
+      }
+      for (i = 0; i < array.length; i++) {
+          x = array.splice(i, 1)[0];
+          p(array, temp.concat(x));
+          array.splice(i, 0, x);
+      }
+  }
+
+  var result = [];
+  p(array, []);
+  return result;
+}
+
 // Find possible corrections for current 404
 window.findPossibleCorrections = (owner, name, limit = 50) => {
   return new Promise((resolve, reject) => {
@@ -107,6 +126,21 @@ window.findPossibleCorrections = (owner, name, limit = 50) => {
           })
         }
       });
+    }
+
+    // Find corrections by permutating words
+    if (split.length > 1 && split.length <= 3) {
+      const permutations = permutate(split);
+
+      for (const permutation of permutations) {
+        if (permutation == split) continue;
+
+        possibleRepoName.push({
+          name: owner + '/' + buildCase(permutation, stringCase),
+          confidence: 20,
+          technique: 'permutation'
+        })
+      }
     }
   
     // Find if there is popular repository that is named similarly
