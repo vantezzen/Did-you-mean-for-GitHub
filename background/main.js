@@ -2,7 +2,6 @@
  * "Did you mean... for GitHub" browser extension
  * Background scripts, checks if API token is provided and handles calls to the GitHub API
  */
-
 // Check if API token is provided
 chrome.storage.local.get(["token", "openedSettingsPage"], result => {
   if (!result.token && !result.openedSettingsPage) {
@@ -26,7 +25,7 @@ chrome.runtime.onMessage.addListener(
           console.debug(`[DYM...?] Found ${possible.length} possible corrections`);
 
           // Filter repos using GitHub GraphQL API
-          window.onlyExistingRepos(possible)
+          window.contactGitHubAPI(possible)
             .then(existing => {
               console.debug(`[DYM...?] Found ${existing.length} existing corrections`);
 
