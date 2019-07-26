@@ -25,7 +25,7 @@ chrome.runtime.onMessage.addListener(
           console.debug(`[DYM...?] Found ${possible.length} possible corrections`);
 
           // Filter repos using GitHub GraphQL API
-          window.contactGitHubAPI(possible)
+          window.contactGitHubAPI(possible, owner, name)
             .then(existing => {
               console.debug(`[DYM...?] Found ${existing.length} existing corrections`);
 

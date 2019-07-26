@@ -5,7 +5,7 @@
 // Translation needed for building and parsing GraphQL query
 const translation = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-const buildGraphQLQuery = (repos) => {
+const buildGraphQLQuery = (repos, originalName) => {
   let query = `query {`;
 
   // Add search query for each repository
@@ -34,15 +34,37 @@ const buildGraphQLQuery = (repos) => {
     `
   }
 
+  query += `
+    search(query: "${originalName}" type:REPOSITORY first:5) {
+      repositoryCount
+      edges {
+        node {
+          ...on Repository {
+            nameWithOwner
+            stargazers {
+              totalCount
+            }
+            description
+            primaryLanguage {
+              name
+              color
+            }
+          }
+        }
+      }
+    }
+  `
+
   query += `}`;
 
   return query;
 }
 
 
-const applyGitHubResults = (result, repos) => {
+const applyGitHubResults = (result, repos, originalNameWithOwner) => {
   let filtered = [];
 
+  // Filter out non-existent repos and add details
   for (const position in result) {
     const index = translation.indexOf(position);
 
@@ -56,10 +78,28 @@ const applyGitHubResults = (result, repos) => {
     }
   }
 
+  // Add results from searching for repo name
+  console.log('1', filtered, result)
+  if (result.search.repositoryCount > 0) {
+    for(const repo of result.search.edges) {
+      const d = window.__DID_YOU_MEAN_distance__(originalNameWithOwner, repo.node.nameWithOwner);
+
+      filtered.push({
+        name: repo.node.nameWithOwner,
+        confidence: 60 - (d * 3),
+        technique: 'search',
+        stars: repo.node.stargazers.totalCount,
+        description: repo.node.description,
+        language: repo.node.primaryLanguage
+      });
+    }
+  }
+  console.log('2', filtered)
+
   return filtered;
 }
 
-window.contactGitHubAPI = (repos) => {
+window.contactGitHubAPI = (repos, originalOwner, originalName) => {
   return new Promise(async (resolve, reject) => {
     // Get API token
     chrome.storage.local.get(["token"], (result) => {
@@ -70,7 +110,7 @@ window.contactGitHubAPI = (repos) => {
       }
 
       // Query GitHub API
-      const query = buildGraphQLQuery(repos);
+      const query = buildGraphQLQuery(repos, originalName);
       fetch('https://api.github.com/graphql', {
         method: 'POST',
         headers: {
@@ -82,7 +122,7 @@ window.contactGitHubAPI = (repos) => {
       })
       .then(r => r.json())
       .then(result => {
-        const filtered = applyGitHubResults(result.data, repos);
+        const filtered = applyGitHubResults(result.data, repos, originalOwner + '/' + originalName);
 
         resolve(filtered);
       });
