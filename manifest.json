@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "\"Did you mean...?\" for GitHub",
-  "version": "1.1",
+  "version": "1.2",
 
   "description": "This extension suggests you similar repository names when you get a 404 error on GitHub",
   "homepage_url": "https://github.com/vantezzen/did-you-mean-for-github",
