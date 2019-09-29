@@ -12,6 +12,10 @@ chrome.storage.local.get(["token", "openedSettingsPage"], result => {
   }
 });
 
+const cleanResults = results => {
+  return results.filter(item => item.name !== undefined);
+}
+
 // Listen for messages from content script
 // We cannot do this request in the content script as Firefox will block it
 chrome.runtime.onMessage.addListener(
@@ -30,13 +34,13 @@ chrome.runtime.onMessage.addListener(
               console.debug(`[DYM...?] Found ${existing.length} existing corrections`);
 
               // Send data back to content script
-              sendResponse(existing);
+              sendResponse(cleanResults(existing));
             })
             .catch(() => {
               console.debug(`[DYM...?] Could not connect to GitHub API`);
 
               // Could not filter out - send back whole array
-              sendResponse(request.possible);
+              sendResponse(cleanResults(request.possible));
             });
         });
       
